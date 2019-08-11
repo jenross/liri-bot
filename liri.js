@@ -4,6 +4,7 @@ require("dotenv").config();
 const keys = require("./keys.js");
 const axios = require("axios");
 const fs = require("fs");
+const moment = require("moment");
 //variables to hold user input 
 let command = process.argv[2];
 let searchArgs = process.argv;
@@ -16,8 +17,10 @@ for (let i = 3; i < searchArgs.length; i++) {
     search += searchArgs[i];
   }
 }
-//movie variables 
+//movie query URL variable
 let movieQueryURL = "http://www.omdbapi.com/?t=" + search + "&y=&plot=short&apikey=trilogy";
+//concert query URL variable 
+let concertQueryURL = "https://rest.bandsintown.com/artists/" + search + "/events?app_id=codingbootcamp"
 //spotify variables 
 // const spotify = new Spotify(keys.spotify);
 const Spotify = require("node-spotify-api");
@@ -26,6 +29,10 @@ switch(command) {
   case "movie-this":
     movieThis(search);
     break; 
+
+  case "concert-this":
+  concertThis(search);
+  break;
   }
 
 function movieThis() {
@@ -44,6 +51,38 @@ function movieThis() {
         console.log("Language: " + response.data.Language);
         console.log("Plot: " + response.data.Plot);
         console.log("Actors: " + response.data.Actors);
+      }
+    })
+    .catch(function(error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log("---------------Data---------------");
+        console.log(error.response.data);
+        console.log("---------------Status---------------");
+        console.log(error.response.status);
+        console.log("---------------Status---------------");
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an object that comes back with details pertaining to the error that occurred.
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Error", error.message);
+      }
+      console.log(error.config);
+  });
+}
+
+function concertThis() {
+  axios.get(concertQueryURL).then(
+    function(response) {
+      for (let i = 0; i < response.data.length; i++) {
+        console.log("--------------------------------------");
+        console.log("Venue: " + response.data[i].venue.name);
+        console.log("Location: " + response.data[i].venue.city + ", " + response.data[i].venue.country);
+        console.log("Date: " + moment(response.data[i].datetime).format("MM/DD/YYYY"));
       }
     })
     .catch(function(error) {
