@@ -51,6 +51,7 @@ function movieThis(search) {
         console.log("If you haven't watched 'Mr. Nobody,' then you should: http://www.imdb.com/title/tt0485947/");
         console.log("It's on Netflix!");
       } else {
+        console.log("--------------------------------------------------------------------------------");
         console.log("Title: " + response.data.Title);
         console.log("Year: " + response.data.Year);
         console.log("IMDB Rating: " + response.data.imdbRating);
@@ -59,6 +60,7 @@ function movieThis(search) {
         console.log("Language: " + response.data.Language);
         console.log("Plot: " + response.data.Plot);
         console.log("Actors: " + response.data.Actors);
+        console.log("--------------------------------------------------------------------------------");
       }
     })
     .catch(function(error) {
@@ -87,8 +89,8 @@ function concertThis(search) {
   let concertQueryURL = "https://rest.bandsintown.com/artists/" + search + "/events?app_id=codingbootcamp"
   axios.get(concertQueryURL).then(
     function(response) {
-      for (let i = 0; i < response.data.length; i++) {
-        console.log("--------------------------------------");
+      for (let i = 0; i < 10; i++) {
+        console.log("--------------------------------------------------------------------------------");
         console.log("Venue: " + response.data[i].venue.name);
         console.log("Location: " + response.data[i].venue.city + ", " + response.data[i].venue.country);
         console.log("Date: " + moment(response.data[i].datetime).format("MM/DD/YYYY"));
@@ -127,7 +129,7 @@ function spotifyThis(search) {
         console.log("Sorry, there was an error.");
       }
         for (let i = 0; i < 5; i++) {
-        console.log("--------------------------------------");
+        console.log("--------------------------------------------------------------------------------");
         console.log("Artist: " + results[i].artists[0].name);
         console.log("Song: " + results[i].name);
         console.log("Preview: " + results[i].preview_url);
@@ -141,7 +143,9 @@ function doWhatItSays() {
     if (error) {
       return console.log(error);
     }
-    let dataArr = data.split(",");
-    runLiri(dataArr[0], dataArr[1]);
+    let dataArr = data.split(',');
+    // console.log(dataArr[0], dataArr[1]);
+    // console.log(dataArr[0], dataArr[1].replace(/['"]+/g, ''));
+    runLiri(dataArr[0], dataArr[1].replace(/['"]+/g, ''));
   });
 }
