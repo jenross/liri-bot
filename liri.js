@@ -21,8 +21,7 @@ for (let i = 3; i < searchArgs.length; i++) {
 let movieQueryURL = "http://www.omdbapi.com/?t=" + search + "&y=&plot=short&apikey=trilogy";
 //concert query URL variable 
 let concertQueryURL = "https://rest.bandsintown.com/artists/" + search + "/events?app_id=codingbootcamp"
-//spotify variables 
-// const spotify = new Spotify(keys.spotify);
+//require spotify
 const Spotify = require("node-spotify-api");
 
 switch(command) {
@@ -31,9 +30,13 @@ switch(command) {
     break; 
 
   case "concert-this":
-  concertThis(search);
-  break;
-  }
+    concertThis(search);
+    break;
+
+  case "spotify-this-song":
+    spotifyThis(search);
+    break;
+}
 
 function movieThis() {
 
@@ -105,4 +108,24 @@ function concertThis() {
       }
       console.log(error.config);
   });
+}
+
+function spotifyThis(search) {
+  let spotify = new Spotify(keys.spotify);
+  if (!search) {
+    search = "The Sign";
+  }
+    spotify.search({type: "track", query: search}, function(error, data) {
+      let results = data.tracks.items;
+      if (error) {
+        console.log("Sorry, there was an error.");
+      }
+        for (let i = 0; i < 5; i++) {
+        console.log("--------------------------------------");
+        console.log("Artist: " + results[i].artists[0].name);
+        console.log("Song: " + results[i].name);
+        console.log("Preview: " + results[i].preview_url);
+        console.log("Album: " + results[i].album.name);
+      }
+    })
 }
