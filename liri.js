@@ -28,11 +28,23 @@ switch(command) {
     break; 
   }
 
-function movieThis(search) {
+function movieThis() {
 
   axios.get(movieQueryURL).then(
     function(response) {
-      console.log("The movie's rating is: " + response.data.imdbRating);
+      if (response.data.Response === "False") {
+        console.log("If you haven't watched 'Mr. Nobody,' then you should: http://www.imdb.com/title/tt0485947/");
+        console.log("It's on Netflix!");
+      } else {
+        console.log("Title: " + response.data.Title);
+        console.log("Year: " + response.data.Year);
+        console.log("IMDB Rating: " + response.data.imdbRating);
+        console.log("Rotten Tomatoes: " + response.data.Ratings[1].Value);
+        console.log("Country: " + response.data.Country);
+        console.log("Language: " + response.data.Language);
+        console.log("Plot: " + response.data.Plot);
+        console.log("Actors: " + response.data.Actors);
+      }
     })
     .catch(function(error) {
       if (error.response) {
