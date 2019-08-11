@@ -5,6 +5,7 @@ const keys = require("./keys.js");
 const axios = require("axios");
 const fs = require("fs");
 const moment = require("moment");
+const Spotify = require("node-spotify-api");
 //variables to hold user input 
 let command = process.argv[2];
 let searchArgs = process.argv;
@@ -17,29 +18,33 @@ for (let i = 3; i < searchArgs.length; i++) {
     search += searchArgs[i];
   }
 }
-//movie query URL variable
-let movieQueryURL = "http://www.omdbapi.com/?t=" + search + "&y=&plot=short&apikey=trilogy";
-//concert query URL variable 
-let concertQueryURL = "https://rest.bandsintown.com/artists/" + search + "/events?app_id=codingbootcamp"
-//require spotify
-const Spotify = require("node-spotify-api");
 
-switch(command) {
-  case "movie-this":
-    movieThis(search);
-    break; 
+runLiri(command, search);
 
-  case "concert-this":
-    concertThis(search);
-    break;
+function runLiri(command, search) {
 
-  case "spotify-this-song":
-    spotifyThis(search);
-    break;
+  switch(command) {
+    case "movie-this":
+      movieThis(search);
+      break; 
+
+    case "concert-this":
+      concertThis(search);
+      break;
+
+    case "spotify-this-song":
+      spotifyThis(search);
+      break;
+
+    case "do-what-it-says":
+      doWhatItSays();
+      break;
+  }
+
 }
 
-function movieThis() {
-
+function movieThis(search) {
+  let movieQueryURL = "http://www.omdbapi.com/?t=" + search + "&y=&plot=short&apikey=trilogy";
   axios.get(movieQueryURL).then(
     function(response) {
       if (response.data.Response === "False") {
@@ -78,7 +83,8 @@ function movieThis() {
   });
 }
 
-function concertThis() {
+function concertThis(search) {
+  let concertQueryURL = "https://rest.bandsintown.com/artists/" + search + "/events?app_id=codingbootcamp"
   axios.get(concertQueryURL).then(
     function(response) {
       for (let i = 0; i < response.data.length; i++) {
@@ -128,4 +134,14 @@ function spotifyThis(search) {
         console.log("Album: " + results[i].album.name);
       }
     })
+}
+
+function doWhatItSays() {
+  fs.readFile("random.txt", "utf8", function(error, data) {
+    if (error) {
+      return console.log(error);
+    }
+    let dataArr = data.split(",");
+    runLiri(dataArr[0], dataArr[1]);
+  });
 }
