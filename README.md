@@ -7,7 +7,7 @@ Liri is a command-line application that provides information about songs, concer
 ## Technologies Used 
 
 * Git 
-* Github
+* GitHub
 * JavaScript
 * Node.js
 * Node packages: 
@@ -22,7 +22,7 @@ Liri is a command-line application that provides information about songs, concer
 
 ## How to Use It
 
-1. Open up your terminal/bash window and navigate to the folder/directory for "liri-bot" where the file "liri.js" is stored. 
+1. Open up your terminal/bash window and navigate to the folder/directory for `liri-bot` where the file `liri.js` is stored. 
 
 <img src="images/liri-bot-1.png" alt="Terminal window showing liri-bot directory" style="width:300px;height:450px;">
 
@@ -44,7 +44,7 @@ Liri is a command-line application that provides information about songs, concer
 
 <img src="images/liri-bot-4.png" alt="Terminal window showing Spotify songs associated with 'Say My Name'">
 
-5. Type the command below and the program will read the "random.txt" file and run the command and search it specifies. 
+5. Type the command below and the program will read the `random.txt` file and run the command and search it specifies. 
 
 ```node liri do-what-it-says```
 
