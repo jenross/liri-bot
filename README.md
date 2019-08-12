@@ -18,7 +18,7 @@ Liri is a command-line application that provides information about songs, concer
 
 1. Open up your terminal/bash window and navigate to the folder/directory for "liri-bot" where the file "liri.js" is stored. 
 
-<img src="images/liri-bot-1.png" alt="Terminal window showing liri-bot directory" style="width:400px;height:550px;">
+<img src="images/liri-bot-1.png" alt="Terminal window showing liri-bot directory" style="width:300px;height:450px;">
 
 2. Type "node liri movie-this 'name of movie'" to see information pulled from the OMDB API about that movie. For example: 
 
