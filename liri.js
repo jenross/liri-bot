@@ -19,8 +19,6 @@ for (let i = 3; i < searchArgs.length; i++) {
   }
 }
 
-runLiri(command, search);
-
 function runLiri(command, search) {
 
   switch(command) {
@@ -149,3 +147,5 @@ function doWhatItSays() {
     runLiri(dataArr[0], dataArr[1].replace(/['"]+/g, ''));
   });
 }
+
+runLiri(command, search);
